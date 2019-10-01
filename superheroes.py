@@ -95,7 +95,6 @@ class Hero():
         pass
 
 
-
 class Weapon(Ability):
     def attack(self):
         value = self.max_damage//2
@@ -113,13 +112,16 @@ class Team(Hero):
         pass
 
     def remove_hero(self, name):
+        """ Will iterate all heroes and if nothing was removed, return 0   """
         index = 0
+        removed = False
         for heroes in self.heroes:
             if(name == heroes.name):
                 self.heroes.pop(index)
-            elif(index == len(self.heroes)):
-                return 0
+                removed = True
             index += 1
+        if(removed is False):
+            return 0
 
     def add_armor(self, armor):
         self.armors.append(armor)
@@ -200,14 +202,14 @@ class Team(Hero):
         # Hint: Use the information stored in each hero.
 
 
-class Arena(Team):
+class Arena:
     def __init__(self):
         self.team_one = None
         self.team_two = None
 
     def create_ability(self):
         ability = str(input("Enter ability name:"))
-        ability_damage = int(input("Ability damage"))
+        ability_damage = int(input("Ability damage:"))
         return Ability(ability, ability_damage)
 
     def create_weapon(self):
@@ -221,7 +223,7 @@ class Arena(Team):
         return Armor(armor, armor_damage)
 
     def create_hero(self):
-        name = input("Name for hero")
+        name = input("Name for hero:")
         ability = self.create_ability()
         armor = self.create_armor()
         weapon = self.create_weapon()
@@ -238,7 +240,7 @@ class Arena(Team):
 
     def build_team_one(self):
         obj = Team("Team one")
-        hero_number = int(input("How many heroes?"))
+        hero_number = int(input("How many heroes?:"))
         for x in range(hero_number):
             obj.add_hero(self.create_hero())
         self.team_one = obj
@@ -246,7 +248,7 @@ class Arena(Team):
 
     def build_team_two(self):
         obj = Team("Team two")
-        hero_number_2 = int(input("How many heroes for team [Two]?"))
+        hero_number_2 = int(input("How many heroes for team [Two]?:"))
         for x in range(hero_number_2):
             obj.add_hero(self.create_hero())
         self.team_two = obj
@@ -283,9 +285,6 @@ class Arena(Team):
         self.team_one.stats()
         self.team_two.stats()
 
-
-#hero = Hero("Hercules")
-#obj = Team("A squad", hero)
 
 if(__name__ == "__main__"):
     while(True):
